@@ -36,20 +36,6 @@ data "archive_file" "write" {
   output_path = "${path.module}/builds/write.zip"
 }
 
-data "aws_iam_policy_document" "lambda_assume" {
-  statement {
-    principals {
-      type = "Service"
-      identifiers = [
-        "lambda.amazonaws.com",
-      ]
-    }
-    actions = [
-      "sts:AssumeRole",
-    ]
-  }
-}
-
 data "aws_iam_policy_document" "api_post_record" {
   statement {
     sid = "PublishToEventBridge"
