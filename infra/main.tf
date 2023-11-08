@@ -117,6 +117,13 @@ resource "aws_cloudwatch_event_bus" "events" {
   name = local.format_string
 }
 
+resource "aws_cloudwatch_event_archive" "archive_all" {
+  name = format(local.resource_format_string, "all-event-archive")
+  event_source_arn = aws_cloudwatch_event_bus.events.arn
+  # retention_days = 365 # Can specify how long to archive in days
+  description = "Archive to store all events"
+}
+
 resource "aws_cloudwatch_event_rule" "permitting_data" {
   name           = format(local.resource_format_string, "permitting-events")
   description    = "Permitting data filter"

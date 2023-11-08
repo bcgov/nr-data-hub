@@ -10,3 +10,4 @@ Repository housing POC code for event based data services hosted on AWS.
 - Enforce updating terraform versions using dependabot
 - AWS X-Ray for better tracing
 - AWS Lake Formation to centralise data lake governance? Investigate
+- Tag everything for cost reporting
