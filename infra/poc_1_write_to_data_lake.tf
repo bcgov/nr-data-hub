@@ -1,43 +1,12 @@
-data "aws_iam_policy_document" "write_to_data_lake_queue" {
-  statement {
-    sid = "AllowKMSKeyAccess"
-    actions = [
-      "kms:Decrypt",
-    ]
-    resources = [
-      aws_kms_key.write_to_data_lake_queue.arn,
-    ]
-  }
-}
-
-resource "aws_kms_key" "write_to_data_lake_queue" {
-  description             = "KMS Key for the batch write queue"
-  deletion_window_in_days = 7
-}
-
-resource "aws_sqs_queue_policy" "write_to_data_lake_queue" {
-  queue_url = aws_sqs_queue.write_to_data_lake.id
-  policy    = data.aws_iam_policy_document.write_to_data_lake_queue.json
-}
-
-resource "aws_sqs_queue" "write_to_data_lake" {
-  name                       = format(local.resource_environment_fs, "batch-queue")
-  visibility_timeout_seconds = 60
-  kms_master_key_id          = aws_kms_key.write_to_data_lake_queue.key_id
+resource "aws_lambda_permission" "allow_cloudwatch_to_call_write_lambda" {
+  statement_id  = "AllowExecutionFromCloudWatch"
+  action        = "lambda:InvokeFunction"
+  function_name = module.write_to_data_lake_lambda.lambda_function_name
+  principal     = "events.amazonaws.com"
+  source_arn    = aws_cloudwatch_event_rule.permitting_all.arn
 }
 
 data "aws_iam_policy_document" "write_to_data_lake_lambda" {
-  statement {
-    sid = "AccessSQS"
-    actions = [
-      "sqs:ReceiveMessage",
-      "sqs:DeleteMessage",
-      "sqs:GetQueueAttributes",
-    ]
-    resources = [
-      aws_sqs_queue.write_to_data_lake.arn,
-    ]
-  }
   statement {
     sid = "AccessS3"
     actions = [
@@ -64,7 +33,6 @@ resource "aws_kms_key" "write_to_data_lake_lambda" {
   deletion_window_in_days = 7
 }
 
-
 module "write_to_data_lake_lambda" {
   source = "terraform-aws-modules/lambda/aws"
 
@@ -88,10 +56,4 @@ module "write_to_data_lake_lambda" {
     BUCKET_NAME   = module.bucket.s3_bucket_id
     DATA_LAKE_KEY = aws_s3_object.data_lake.key
   }
-}
-
-resource "aws_lambda_event_source_mapping" "batch_queue_write_to_data_lake" {
-  event_source_arn = aws_sqs_queue.write_to_data_lake.arn
-  function_name    = module.write_to_data_lake_lambda.lambda_function_arn
-  batch_size       = 10
 }

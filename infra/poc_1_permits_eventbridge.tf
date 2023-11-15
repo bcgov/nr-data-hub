@@ -21,7 +21,7 @@ resource "aws_cloudwatch_event_rule" "permitting_all" {
 }
 
 resource "aws_cloudwatch_event_target" "permitting_all" {
-  arn            = aws_sqs_queue.write_to_data_lake.arn
+  arn            = module.write_to_data_lake_lambda.lambda_function_arn
   rule           = aws_cloudwatch_event_rule.permitting_all.name
   event_bus_name = aws_cloudwatch_event_bus.permitting.name
 }
