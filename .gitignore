@@ -3,3 +3,4 @@ infra/builds
 infra/plan
 .env
 .envrc
+.DS_Store
