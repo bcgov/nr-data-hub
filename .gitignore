@@ -1,6 +1,8 @@
 infra/.terraform/
 infra/builds
 infra/plan
+infra/config/
+infra/pocs/
 .env
 .envrc
 .DS_Store
