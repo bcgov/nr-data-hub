@@ -1,3 +1,5 @@
 infra/.terraform/
 infra/builds
 infra/plan
+.env
+.envrc
