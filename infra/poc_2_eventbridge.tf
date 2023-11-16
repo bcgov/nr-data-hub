@@ -45,8 +45,10 @@ resource "aws_cloudwatch_event_target" "teams_notifications" {
   input_transformer {
     input_paths = {
       source = "$.source",
+      current_status = "$.detail.current_status"
+      previous_status = "$.detail.previous_status"
     }
-    input_template = "{\"text\":\"Hello World for a <source> event!\"}"
+    input_template = "{\"text\":\"<source> status change\\n\\nCurrent: <current_status>\\n\\nPrevious: <previous_status>\"}"
   }
 }
 
