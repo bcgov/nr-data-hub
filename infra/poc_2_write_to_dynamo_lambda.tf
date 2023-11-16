@@ -2,7 +2,7 @@ data "aws_iam_policy_document" "write_to_dynamo_lambda" {
   statement {
     sid = "AllowDynamoDBAccess"
     actions = [
-      "dynamo:UpdateItem",
+      "dynamodb:UpdateItem",
     ]
     resources = [
       aws_dynamodb_table.permit_status_table.arn,
@@ -49,4 +49,8 @@ module "write_to_dynamo_lambda" {
   kms_key_arn        = aws_kms_key.write_to_dynamo_lambda.arn
   attach_policy_json = true
   policy_json        = data.aws_iam_policy_document.write_to_dynamo_lambda.json
+
+  environment_variables = {
+    DYNAMODB_TABLE_NAME = aws_dynamodb_table.permit_status_table.name
+  }
 }

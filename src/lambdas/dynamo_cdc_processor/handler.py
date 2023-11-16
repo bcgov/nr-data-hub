@@ -3,4 +3,5 @@ import boto3
 
 def handler(event, context):
     print("Hello world!")
+    print(event)
 
