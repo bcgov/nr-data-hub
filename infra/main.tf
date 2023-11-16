@@ -19,10 +19,10 @@ data "aws_iam_policy_document" "eventbridge_assume" {
 }
 
 # Lambda builds
-data "archive_file" "api_permits_get_all" {
+data "archive_file" "api_permits_get" {
   type        = "zip"
-  source_file = "${path.module}/../src/lambdas/api/permits/get_all/handler.py"
-  output_path = "${path.module}/builds/api_permits_get_all.zip"
+  source_file = "${path.module}/../src/lambdas/api/permits/get/handler.py"
+  output_path = "${path.module}/builds/api_permits_get.zip"
 }
 
 data "archive_file" "api_permits_post" {
@@ -35,12 +35,6 @@ data "archive_file" "api_statuses_get_all" {
   type        = "zip"
   source_file = "${path.module}/../src/lambdas/api/statuses/get_all/handler.py"
   output_path = "${path.module}/builds/api_statuses_get_all.zip"
-}
-
-data "archive_file" "api_statuses_get_by_tracking_number" {
-  type        = "zip"
-  source_file = "${path.module}/../src/lambdas/api/statuses/get_by_tracking_number/handler.py"
-  output_path = "${path.module}/builds/api_statuses_get_by_tracking_number.zip"
 }
 
 data "archive_file" "write_to_data_lake" {

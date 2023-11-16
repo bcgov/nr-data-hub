@@ -1,4 +1,4 @@
-data "aws_iam_policy_document" "api_permits_get_all_lambda" {
+data "aws_iam_policy_document" "api_permits_get_lambda" {
   statement {
     sid = "AllowAthenaFederatedQueries"
     actions = [
@@ -49,33 +49,33 @@ data "aws_iam_policy_document" "api_permits_get_all_lambda" {
       "kms:Decrypt",
     ]
     resources = [
-      aws_kms_key.api_permits_get_all_lambda.arn,
+      aws_kms_key.api_permits_get_lambda.arn,
     ]
   }
 }
 
-resource "aws_kms_key" "api_permits_get_all_lambda" {
+resource "aws_kms_key" "api_permits_get_lambda" {
   description             = "KMS Key for the GET permits Lambda"
   deletion_window_in_days = 7
 }
 
-module "api_permits_get_all_lambda" {
+module "api_permits_get_lambda" {
   source = "terraform-aws-modules/lambda/aws"
 
-  function_name = format(local.resource_environment_fs, "api-get-record")
+  function_name = format(local.resource_environment_fs, "api-get-records")
   description   = "Lambda to get all permits from the data lake using Athena."
 
   create_package         = false
-  local_existing_package = data.archive_file.api_permits_get_all.output_path
+  local_existing_package = data.archive_file.api_permits_get.output_path
 
   handler     = "handler.handler"
   runtime     = "python3.8"
   memory_size = 128
   timeout     = 60
 
-  kms_key_arn        = aws_kms_key.api_permits_get_all_lambda.arn
+  kms_key_arn        = aws_kms_key.api_permits_get_lambda.arn
   attach_policy_json = true
-  policy_json        = data.aws_iam_policy_document.api_permits_get_all_lambda.json
+  policy_json        = data.aws_iam_policy_document.api_permits_get_lambda.json
 
   environment_variables = {
     GLUE_DATABASE_NAME           = aws_glue_catalog_database.permitting.name
