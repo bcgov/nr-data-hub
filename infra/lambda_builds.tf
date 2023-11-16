@@ -28,8 +28,14 @@ data "archive_file" "write_to_data_lake" {
   output_path = "${path.module}/builds/write_to_data_lake.zip"
 }
 
-data "archive_file" "write_statuses_to_dynamo" {
+data "archive_file" "write_to_dynamo" {
   type        = "zip"
-  source_file = "${path.module}/../src/lambdas/write_statuses_to_dynamo/handler.py"
-  output_path = "${path.module}/builds/write_statuses_to_dynamo.zip"
+  source_file = "${path.module}/../src/lambdas/write_to_dynamo/handler.py"
+  output_path = "${path.module}/builds/write_to_dynamo.zip"
+}
+
+data "archive_file" "dynamo_cdc_processor" {
+  type        = "zip"
+  source_file = "${path.module}/../src/lambdas/dynamo_cdc_processor/handler.py"
+  output_path = "${path.module}/builds/dynamo_cdc_processor.zip"
 }

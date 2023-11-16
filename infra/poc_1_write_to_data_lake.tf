@@ -3,7 +3,7 @@ resource "aws_lambda_permission" "allow_cloudwatch_to_call_write_lambda" {
   action        = "lambda:InvokeFunction"
   function_name = module.write_to_data_lake_lambda.lambda_function_name
   principal     = "events.amazonaws.com"
-  source_arn    = aws_cloudwatch_event_rule.permitting_all.arn
+  source_arn    = aws_cloudwatch_event_rule.permitting_raw.arn
 }
 
 data "aws_iam_policy_document" "write_to_data_lake_lambda" {
