@@ -2,7 +2,7 @@ data "aws_iam_policy_document" "get_statuses_lambda" {
   statement {
     sid = "AllowDynamoDBAccess"
     actions = [
-      "dynamo:GetItem",
+      "dynamodb:GetItem",
     ]
     resources = [
       aws_dynamodb_table.permit_status_table.arn,
@@ -26,6 +26,7 @@ resource "aws_kms_key" "api_statuses_get_all_lambda" {
 
 module "api_statuses_get_all_lambda" {
   source = "terraform-aws-modules/lambda/aws"
+  version = "6.4.0"
 
   function_name = format(local.resource_environment_fs, "get-statuses-lambda")
   description   = "Lambda to get permit statuses data from DynamoDB."
@@ -41,4 +42,8 @@ module "api_statuses_get_all_lambda" {
   kms_key_arn        = aws_kms_key.api_statuses_get_all_lambda.arn
   attach_policy_json = true
   policy_json        = data.aws_iam_policy_document.get_statuses_lambda.json
+
+  environment_variables = {
+    DYNAMODB_TABLE_NAME = aws_dynamodb_table.permit_status_table.name
+  }
 }

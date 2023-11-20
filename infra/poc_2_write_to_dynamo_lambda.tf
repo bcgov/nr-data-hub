@@ -34,6 +34,7 @@ resource "aws_lambda_permission" "allow_cloudwatch_to_call_write_to_dynamo_lambd
 
 module "write_to_dynamo_lambda" {
   source = "terraform-aws-modules/lambda/aws"
+  version = "6.4.0"
 
   function_name = format(local.resource_environment_fs, "write-to-dynamo-lambda")
   description   = "Lambda to write permit status data to DynamoDB."

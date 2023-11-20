@@ -22,7 +22,7 @@ def handler(event, context):
                 "Time": datetime.now(),
                 "Source": event.get("permit_system"),
                 "Resources": [],
-                "DetailType": "domain",
+                "DetailType": "API POST",
                 "Detail": json.dumps({
                     **event.get("attributes")
                 }),

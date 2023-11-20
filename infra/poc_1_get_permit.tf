@@ -61,6 +61,7 @@ resource "aws_kms_key" "api_permits_get_lambda" {
 
 module "api_permits_get_lambda" {
   source = "terraform-aws-modules/lambda/aws"
+  version = "6.4.0"
 
   function_name = format(local.resource_environment_fs, "api-get-records")
   description   = "Lambda to get all permits from the data lake using Athena."

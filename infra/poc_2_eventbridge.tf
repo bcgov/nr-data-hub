@@ -44,11 +44,10 @@ resource "aws_cloudwatch_event_target" "teams_notifications" {
 
   input_transformer {
     input_paths = {
-      source = "$.source",
-      current_status = "$.detail.current_status"
-      previous_status = "$.detail.previous_status"
+      message = "$.detail.message"
+      detail_type = "$.detail-type",
     }
-    input_template = "{\"text\":\"<source> status change\\n\\nCurrent: <current_status>\\n\\nPrevious: <previous_status>\"}"
+    input_template = "{\"text\":\"<detail_type>\\n\\n<message>\"}"
   }
 }
 
@@ -59,7 +58,9 @@ resource "aws_cloudwatch_event_rule" "teams_notifications" {
 
   event_pattern = jsonencode({
     detail-type = [
-      "Status Changed"
+      "Project Added",
+      "Permit Added to Project",
+      "Permit Status Changed"
     ]
   })
 }

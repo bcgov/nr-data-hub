@@ -6,3 +6,4 @@ infra/pocs/
 .env
 .envrc
 .DS_Store
+test.json

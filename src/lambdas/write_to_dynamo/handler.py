@@ -1,4 +1,5 @@
 import boto3
+import json
 import os
 
 client = boto3.client("dynamodb")
@@ -15,11 +16,13 @@ client = boto3.client("dynamodb")
 def handler(event, context):
     print("Started processing")
 
-    trackingnumber = event.get("detail").get("trackingnumber")
+    detail = event.get("detail")
+    trackingnumber = detail.pop("trackingnumber")
     permit_system = event.get("source")
-    attribute_updates = {f"{permit_system}_{k}": {"Value": {"S": v}} for k, v in event.get("detail").items() if v != "trackingnumber"}
 
-    response = client.update_item(
+    attribute_updates = {permit_system: {"Value": {"S": detail.get("status")}}}
+
+    _ = client.update_item(
         TableName=os.environ["DYNAMODB_TABLE_NAME"],
         Key={"trackingnumber": {
             "S": trackingnumber,

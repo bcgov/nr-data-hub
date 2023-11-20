@@ -38,6 +38,7 @@ resource "aws_kms_key" "dyanmo_stream_processor_lambda" {
 
 module "dyanmo_stream_processor_lambda" {
   source = "terraform-aws-modules/lambda/aws"
+  version = "6.4.0"
 
   function_name = format(local.resource_environment_fs, "dynamo-stream-processor-lambda")
   description   = "Lambda to process CDC changes on the DynamoDB table."
@@ -53,4 +54,29 @@ module "dyanmo_stream_processor_lambda" {
   kms_key_arn        = aws_kms_key.dyanmo_stream_processor_lambda.arn
   attach_policy_json = true
   policy_json        = data.aws_iam_policy_document.dyanmo_stream_processor_lambda.json
+
+  allowed_triggers = {
+    dynamodb = {
+      principal  = "dynamodb.amazonaws.com"
+      source_arn = aws_dynamodb_table.permit_status_table.stream_arn
+    }
+  }
+
+  event_source_mapping = {
+    dynamodb = {
+      event_source_arn  = aws_dynamodb_table.permit_status_table.stream_arn
+      starting_position = "LATEST"
+    }
+  }
+  
+  publish = true
+
+  environment_variables = {
+    EventBusName = aws_cloudwatch_event_bus.permitting.arn
+  }
+}
+
+resource "aws_lambda_function_event_invoke_config" "test" {
+  function_name                = module.dyanmo_stream_processor_lambda.lambda_function_arn
+  maximum_retry_attempts       = 0
 }

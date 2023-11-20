@@ -38,7 +38,8 @@ def handler(event, context):
             break
 
         if i == 2:
-            raise Exception("Execution unsuccessful after 5 attempts.")
+            print("ERROR: Execution unsuccessful after 5 attempts.")
+            return
         
     results = client.get_query_results(
         QueryExecutionId=execution_id,
@@ -46,7 +47,8 @@ def handler(event, context):
     )
 
     if len(results["ResultSet"]["Rows"]) == 1:
-        raise Exception("No results returned from query.")
+        print("ERROR: No results returned from query.")
+        return
 
     # TODO: Use AWS Data Wrangler lambda layer for this in the future!
     headers = [header["VarCharValue"] for header in results["ResultSet"]["Rows"][0]["Data"]]

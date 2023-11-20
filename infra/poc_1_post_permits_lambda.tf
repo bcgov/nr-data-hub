@@ -26,6 +26,7 @@ resource "aws_kms_key" "api_permits_post_lambda" {
 
 module "api_permits_post_lambda" {
   source = "terraform-aws-modules/lambda/aws"
+  version = "6.4.0"
 
   function_name = format(local.resource_environment_fs, "api-permits-post-lambda")
   description   = "Lambda to handle POST requests."

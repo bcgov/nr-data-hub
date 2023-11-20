@@ -35,6 +35,7 @@ resource "aws_kms_key" "write_to_data_lake_lambda" {
 
 module "write_to_data_lake_lambda" {
   source = "terraform-aws-modules/lambda/aws"
+  version = "6.4.0"
 
   function_name = format(local.resource_environment_fs, "write-to-data-lake-lambda")
   description   = "Lambda to write batches of SQS messages to the data lake in S3."
