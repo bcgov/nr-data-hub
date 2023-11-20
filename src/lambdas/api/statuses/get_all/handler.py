@@ -19,5 +19,5 @@ def handler(event, context):
     )
     
     print("Processing Completed")
-    return {k: v.get("S") for k, v in response.get("Item", {}).items()}
+    return {k: v.get("S") for k, v in response.get("Item", {}).items() if k != "trackingnumber"}
 

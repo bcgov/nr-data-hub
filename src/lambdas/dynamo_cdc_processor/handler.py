@@ -42,7 +42,8 @@ def get_insert_event(record):
         "Resources": [],
         "DetailType": "Project Added",
         "Detail": json.dumps({
-            "message": f'New project added to status tracking with trackingnumber {tracking_number.get("S")}\\n\\nPermit system {permit_system} has status {value.get("S")}'
+            "notification": f'Project added with trackingnumber {tracking_number.get("S")}',
+            "message": f'Inception Permit System {permit_system}. Current Status {value.get("S")}'
         }),
         "EventBusName": os.environ["EventBusName"],
     }
@@ -67,7 +68,8 @@ def get_modify_event(record):
         event["Source"] = new_system
         event["DetailType"] = "Permit Added to Project"
         event["Detail"] = json.dumps({
-            "message": f'New system added to Project with trackingnumber {tracking_number.get("S")}\\n\\nSystem: {new_system}\\nStatus: {new_image[new_system].get("S")}'
+            "notification": f'Permit added to Project with trackingnumber {tracking_number.get("S")}',
+            "message": f'System: {new_system}. Current Status: {new_image[new_system].get("S")}'
         })
         return event
     else:
@@ -83,7 +85,8 @@ def get_modify_event(record):
         event["Source"] = system
         event["DetailType"] = "Permit Status Changed"
         event["Detail"] = json.dumps({
-            "message": f'Project permit with trackingnumber {tracking_number.get("S")} updated\\n\\nSystem: {system}\\nNew Status: {new_status}\\nOld Status: {old_status}'
+            "notification": f'Permit updated on project with trackingnumber {tracking_number.get("S")}',
+            "message": f'System: {system}. Current Status: {new_status}. Previous Status: {old_status}'
         })
         return event
 

@@ -30,7 +30,7 @@ resource "aws_iam_role" "teams_notifications" {
   name               = format(local.resource_environment_fs, "status-api-trigger")
   assume_role_policy = data.aws_iam_policy_document.eventbridge_assume.json
   inline_policy {
-    name = "AllowEventBridge"
+    name   = "AllowEventBridge"
     policy = data.aws_iam_policy_document.teams_notifications.json
   }
 }
@@ -44,10 +44,11 @@ resource "aws_cloudwatch_event_target" "teams_notifications" {
 
   input_transformer {
     input_paths = {
-      message = "$.detail.message"
-      detail_type = "$.detail-type",
+      message      = "$.detail.message"
+      notification = "$.detail.notification"
+      detail_type  = "$.detail-type",
     }
-    input_template = "{\"text\":\"<detail_type>\\n\\n<message>\"}"
+    input_template = "{\"text\":\"<detail_type> <notification> <message>\"}"
   }
 }
 
@@ -66,11 +67,11 @@ resource "aws_cloudwatch_event_rule" "teams_notifications" {
 }
 
 resource "aws_cloudwatch_event_api_destination" "teams_webhook" {
-  name                             = format(local.resource_environment_fs, "teams-webhook")
-  description                      = "Teams webhook destination."
-  invocation_endpoint              = var.webhook_url
-  http_method                      = "POST"
-  connection_arn                   = aws_cloudwatch_event_connection.teams_webhook.arn
+  name                = format(local.resource_environment_fs, "teams-webhook")
+  description         = "Teams webhook destination."
+  invocation_endpoint = var.webhook_url
+  http_method         = "POST"
+  connection_arn      = aws_cloudwatch_event_connection.teams_webhook.arn
 }
 
 resource "aws_cloudwatch_event_connection" "teams_webhook" {
@@ -80,7 +81,7 @@ resource "aws_cloudwatch_event_connection" "teams_webhook" {
 
   auth_parameters {
     api_key {
-      key = "Dummy"
+      key   = "Dummy"
       value = "None"
     }
   }

@@ -25,7 +25,7 @@ resource "aws_kms_key" "api_statuses_get_all_lambda" {
 }
 
 module "api_statuses_get_all_lambda" {
-  source = "terraform-aws-modules/lambda/aws"
+  source  = "terraform-aws-modules/lambda/aws"
   version = "6.4.0"
 
   function_name = format(local.resource_environment_fs, "get-statuses-lambda")

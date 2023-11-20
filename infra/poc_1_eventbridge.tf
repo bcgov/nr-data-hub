@@ -8,7 +8,7 @@ resource "aws_cloudwatch_event_archive" "permitting_raw" {
   description      = "Archive to store all permitting events"
 
   event_pattern = jsonencode({
-    detail-type = [ "API POST" ]
+    detail-type = ["API POST"]
   })
 }
 
@@ -18,7 +18,7 @@ resource "aws_cloudwatch_event_rule" "permitting_raw" {
   event_bus_name = aws_cloudwatch_event_bus.permitting.name
 
   event_pattern = jsonencode({
-    detail-type = [ "API POST" ]
+    detail-type = ["API POST"]
   })
 }
 
