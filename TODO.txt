@@ -1,0 +1,36 @@
+## POC 1: Data Product on AWS
+
+- [ ] Identify the database and specific table we wish to use in POC
+  
+  - Discuss with the data architects best table to use for the POC, small, little or no PDFs?
+  - Confirm with Annika which attributes we'll want for a POC, seen a doc on confluence for this, messaged her since!
+
+- [ ] Write API application to write data from the source database to location in S3
+
+    - Should be simple enough, operate on a cron or similar to query data and write the table into S3, could be done hourly during working hours or something
+    - Deployed and provisioned via OpenShift
+    - Destination should be a RAW delivery directory in the permitting domain bucket
+
+- [ ] Plumb replication pipeline to processed S3 bucket
+
+    - The easy bit
+    - Use transformation logic defined by Vish and Abi
+    - Deliver transformed data to another directory in the S3 bucket
+
+- [ ] Expose output ports to downstream users
+
+    - Simple implementation will be S3 files, could be extended to athena for SQL like queries
+    - Files should be fine however
+
+- [ ] Expose an observability port to downstream users
+
+    - Health of data product, created from the health of constituent services
+    - Unsure of implementation, likely a lambda
+    - Logs would be good too, maybe even
+
+- [ ] Expose a discoverability port to downstream users
+
+    - DynamoDB for global URI of the data product
+    - Expose some programatic documentation somewhere?
+
+
