@@ -174,3 +174,24 @@ module "trigger_datasync_task_lambda" {
     TASK_ARN = aws_datasync_task.raw_nightly_replication.arn
   }
 }
+
+resource "aws_lambda_permission" "allow_source_to_invoke" {
+  statement_id  = "AllowInvocationFromSourceS3Bucket"
+  action        = "lambda:InvokeFunction"
+  function_name = module.trigger_datasync_task_lambda.lambda_function_name
+  principal     = "s3.amazonaws.com"
+  source_arn    = data.aws_s3_bucket.source.arn
+}
+
+resource "aws_s3_bucket_notification" "bucket_notification" {
+  bucket = data.aws_s3_bucket.source.id
+
+  lambda_function {
+    lambda_function_arn = module.trigger_datasync_task_lambda.lambda_function_arn
+    events              = ["s3:ObjectCreated:*"]
+  }
+
+  depends_on = [
+    aws_lambda_permission.allow_source_to_invoke,
+  ]
+}
