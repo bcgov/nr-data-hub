@@ -1,19 +1,24 @@
 variable "name" {
-  type = "string"
+  type = string
   description = "Name of the data product."
 }
 
 variable "environment" {
-  type = "string"
+  type = string
   description = "Name of the environment."
 }
 
 variable "source_bucket_id" {
-  type = "string"
+  type = string
   description = "Name of the bucket to replicate data from."
 }
 
 variable "source_bucket_key" {
-  type = "string"
+  type = string
   description = "Key denoting location of data to replicate."
+}
+
+variable "processing_lambda_build_location" {
+  type = string
+  description = "Build location of the processing lambda."
 }

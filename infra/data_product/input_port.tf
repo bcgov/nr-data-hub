@@ -6,14 +6,6 @@ data "aws_s3_bucket" "source" {
   bucket = var.source_bucket_id
 }
 
-module "bucket" {
-  source  = "terraform-aws-modules/s3-bucket/aws"
-  version = "3.15.1"
-
-  bucket            = "data-product-${var.environment}"
-  block_public_acls = true
-}
-
 resource "aws_s3_object" "raw" {
   bucket = module.bucket.s3_bucket_id
   key    = "raw/"
@@ -21,11 +13,15 @@ resource "aws_s3_object" "raw" {
 
 data "aws_iam_policy_document" "data_sync_assume" {
   statement {
-    actions = ["sts:AssumeRole"]
+    actions = [
+      "sts:AssumeRole",
+    ]
 
     principals {
       type        = "Service"
-      identifiers = ["datasync.amazonaws.com"]
+      identifiers = [
+        "datasync.amazonaws.com",
+      ]
     }
   }
 }
@@ -147,7 +143,7 @@ data "aws_iam_policy_document" "trigger_datasync_task_lambda" {
 data "archive_file" "trigger_datasync_task_lambda" {
   type        = "zip"
   source_file = "${path.module}/../../src/lambdas/trigger_datasync/handler.py"
-  output_path = "${path.module}/builds/trigger_datasync.zip"
+  output_path = "${path.module}/../builds/trigger_datasync.zip"
 }
 
 module "trigger_datasync_task_lambda" {
@@ -183,12 +179,14 @@ resource "aws_lambda_permission" "allow_source_to_invoke" {
   source_arn    = data.aws_s3_bucket.source.arn
 }
 
-resource "aws_s3_bucket_notification" "bucket_notification" {
+resource "aws_s3_bucket_notification" "source_bucket_notification" {
   bucket = data.aws_s3_bucket.source.id
 
   lambda_function {
     lambda_function_arn = module.trigger_datasync_task_lambda.lambda_function_arn
-    events              = ["s3:ObjectCreated:*"]
+    events              = [
+      "s3:ObjectCreated:*",
+    ]
   }
 
   depends_on = [

@@ -7,6 +7,6 @@ module "retro_fit_bucket" {
 }
 
 resource "aws_s3_object" "raw" {
-  bucket = module.bucket.s3_bucket_id
+  bucket = module.retro_fit_bucket.s3_bucket_id
   key    = "raw/"
 }
