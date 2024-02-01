@@ -1,0 +1,2 @@
+bucket = "terraform-remote-state-ns1ozh-dev"
+key = "nr-data-hub"
