@@ -1,12 +1,9 @@
 name: Terraform Security Scan
 on:
-  push:
-    branches:
-      - main
   pull_request:
 jobs:
   build:
-    name: Build
+    name: Run Trivy
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout code
