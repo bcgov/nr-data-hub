@@ -50,7 +50,6 @@ jobs:
     uses: ./.github/workflows/.deploy.yml
     secrets: inherit
     with:
-      autoscaling: true
       environment: prod
       tag: ${{ needs.vars.outputs.pr }}
       release: prod
