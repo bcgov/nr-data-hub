@@ -40,4 +40,5 @@ jobs:
       #     repository: ${{ github.repository }}/${{ matrix.package }}
       #     target: ${{ github.event.number }}
       #     tags: latest
-      - run: echo "Retags TBD: ${{ matrix.package }}"
+      - run: |
+          echo "Retags TBD: ${{ matrix.package }}"

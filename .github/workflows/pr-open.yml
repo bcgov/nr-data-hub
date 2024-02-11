@@ -27,7 +27,8 @@ jobs:
       #     tag: ${{ github.event.number }}
       #     tag_fallback: latest
       #     triggers: ('${{ matrix.package }}/')
-      - run: echo "Builds TBD: ${{ matrix.package }}"
+      - run: |
+          echo "Builds TBD: ${{ matrix.package }}"
 
   # https://github.com/bcgov-nr/action-deployer-openshift
   deploys:
