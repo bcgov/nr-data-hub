@@ -74,5 +74,6 @@ jobs:
       #     repository: ${{ github.repository }}/${{ matrix.package }}
       #     target: ${{ needs.vars.outputs.pr }}
       #     tags: prod
-      - run: echo "Retags TBD: ${{ matrix.package }}"
+      - run: |
+          echo "Retags TBD: ${{ matrix.package }}"
 
