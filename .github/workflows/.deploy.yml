@@ -25,11 +25,6 @@ on:
         type: string
 
       ### Usually a bad idea / not recommended
-      directory:
-        description: 'Chart directory'
-        default: 'charts/${{ github.event.repository.name }}'
-        required: false
-        type: string
       timeout-minutes:
         description: 'Timeout minutes'
         default: 10
@@ -84,7 +79,6 @@ jobs:
 
       - name: Deploy if Triggers Fired
         if: ${{ steps.triggers.outputs.triggered == 'true' }}
-        working-directory: ${{ inputs.directory }}
         shell: bash
         run: |
           # Expand for deployment processing
