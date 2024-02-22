@@ -138,10 +138,6 @@
       "type": "string",
       "description": "Date in which the consultation with First Nations ends",
       "format": "date-time"
-    },
-    "fn_consultn_completion_date": {
-      "type": "string",
-      "description": "Additional comments provided by the First Nations consultation process"
     }
   },
   "required": [

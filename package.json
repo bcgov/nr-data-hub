@@ -1,0 +1,15 @@
+{
+  "name": "nr-data-hub",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/bcgov/nr-data-hub.git",
+  "author": "Kane Smith <kane.smith@gov.bc.ca>",
+  "license": "MIT",
+  "dependencies": {
+    "json-schema-to-typescript": "^13.1.2"
+  },
+  "scripts": {
+    "autogenerate": "yarn run generate-typescript-schemas",
+    "generate-typescript-schemas": "npx ts-node src/autogen/typescriptInterfaces.ts"
+  }
+}
