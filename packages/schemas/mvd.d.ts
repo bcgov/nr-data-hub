@@ -1,3 +1,9 @@
+/* eslint-disable */
+/**
+ * This file was automatically generated.
+ * DO NOT MODIFY IT BY HAND.
+ */
+
 /**
  * Standardisation of the attributes collected from all LOB source systems associated with the PMT
  */
