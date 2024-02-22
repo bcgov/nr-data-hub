@@ -109,7 +109,7 @@
       "description": "Date in which the review of the initial application's completeness concludes",
       "format": "date-time"
     },
-    "tech_review_completion_date ": {
+    "tech_review_completion_date": {
       "type": "string",
       "description": "Date in which the technical team concludes their review of the application",
       "format": "date-time"
@@ -119,7 +119,7 @@
       "description": "Date in which the permit is rejected",
       "format": "date-time"
     },
-    "adjudication_date ": {
+    "adjudication_date": {
       "type": "string",
       "description": "Date in which the permit is adjudicated, approved or issued",
       "format": "date-time"

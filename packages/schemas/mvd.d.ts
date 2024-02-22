@@ -1,7 +1,7 @@
 /* eslint-disable */
 /**
  * This file was automatically generated.
- * DO NOT MODIFY IT BY HAND.
+ * Do not modify this file by hand.
  */
 
 /**
@@ -67,7 +67,7 @@ export interface PermittingMvd {
   /**
    * Date in which the technical team concludes their review of the application
    */
-  "tech_review_completion_date "?: string;
+  tech_review_completion_date?: string;
   /**
    * Date in which the permit is rejected
    */
@@ -75,7 +75,7 @@ export interface PermittingMvd {
   /**
    * Date in which the permit is adjudicated, approved or issued
    */
-  "adjudication_date "?: string;
+  adjudication_date?: string;
   /**
    * Date in which the permit is amended
    */
