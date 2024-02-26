@@ -55,7 +55,7 @@ export interface PermittingMvd {
   /**
    * The form type for a permit or licence application
    */
-  permit_application_type?: "New" | "Amendment" | "Cancel" | "Change Ownership";
+  permit_application_type?: ("New" | "Amendment" | "Cancel" | "Change Ownership") | null;
   /**
    * Date in which the application for permit was submitted
    */
@@ -63,29 +63,29 @@ export interface PermittingMvd {
   /**
    * Date in which the review of the initial application's completeness concludes
    */
-  accepted_date?: string;
+  accepted_date?: string | null;
   /**
    * Date in which the technical team concludes their review of the application
    */
-  tech_review_completion_date?: string;
+  tech_review_completion_date?: string | null;
   /**
    * Date in which the permit is rejected
    */
-  rejected_date?: string;
+  rejected_date?: string | null;
   /**
    * Date in which the permit is adjudicated, approved or issued
    */
-  adjudication_date?: string;
+  adjudication_date?: string | null;
   /**
    * Date in which the permit is amended
    */
-  amendment_date?: string;
+  amendment_date?: string | null;
   /**
    * Date in which the consultation with First Nations starts
    */
-  fn_consultn_start_date?: string;
+  fn_consultn_start_date?: string | null;
   /**
    * Date in which the consultation with First Nations ends
    */
-  fn_consultn_completion_date?: string;
+  fn_consultn_completion_date?: string | null;
 }

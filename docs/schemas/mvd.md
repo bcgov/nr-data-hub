@@ -15,15 +15,15 @@
 | [business](#business)                                          | `string` | Required | cannot be null | [permitting\_mvd](mvd-properties-business.md "https://github.com/bcgov/nr-data-hub/tree/main/schemas/mvd.schema.json#/properties/business")                                       |
 | [application\_status](#application_status)                     | `string` | Required | cannot be null | [permitting\_mvd](mvd-properties-application_status.md "https://github.com/bcgov/nr-data-hub/tree/main/schemas/mvd.schema.json#/properties/application_status")                   |
 | [permit\_application\_name](#permit_application_name)          | `string` | Required | cannot be null | [permitting\_mvd](mvd-properties-permit_application_name.md "https://github.com/bcgov/nr-data-hub/tree/main/schemas/mvd.schema.json#/properties/permit_application_name")         |
-| [permit\_application\_type](#permit_application_type)          | `string` | Optional | cannot be null | [permitting\_mvd](mvd-properties-permit_application_type.md "https://github.com/bcgov/nr-data-hub/tree/main/schemas/mvd.schema.json#/properties/permit_application_type")         |
+| [permit\_application\_type](#permit_application_type)          | `string` | Optional | can be null    | [permitting\_mvd](mvd-properties-permit_application_type.md "https://github.com/bcgov/nr-data-hub/tree/main/schemas/mvd.schema.json#/properties/permit_application_type")         |
 | [received\_date](#received_date)                               | `string` | Required | cannot be null | [permitting\_mvd](mvd-properties-received_date.md "https://github.com/bcgov/nr-data-hub/tree/main/schemas/mvd.schema.json#/properties/received_date")                             |
-| [accepted\_date](#accepted_date)                               | `string` | Optional | cannot be null | [permitting\_mvd](mvd-properties-accepted_date.md "https://github.com/bcgov/nr-data-hub/tree/main/schemas/mvd.schema.json#/properties/accepted_date")                             |
-| [tech\_review\_completion\_date](#tech_review_completion_date) | `string` | Optional | cannot be null | [permitting\_mvd](mvd-properties-tech_review_completion_date.md "https://github.com/bcgov/nr-data-hub/tree/main/schemas/mvd.schema.json#/properties/tech_review_completion_date") |
-| [rejected\_date](#rejected_date)                               | `string` | Optional | cannot be null | [permitting\_mvd](mvd-properties-rejected_date.md "https://github.com/bcgov/nr-data-hub/tree/main/schemas/mvd.schema.json#/properties/rejected_date")                             |
-| [adjudication\_date](#adjudication_date)                       | `string` | Optional | cannot be null | [permitting\_mvd](mvd-properties-adjudication_date.md "https://github.com/bcgov/nr-data-hub/tree/main/schemas/mvd.schema.json#/properties/adjudication_date")                     |
-| [amendment\_date](#amendment_date)                             | `string` | Optional | cannot be null | [permitting\_mvd](mvd-properties-amendment_date.md "https://github.com/bcgov/nr-data-hub/tree/main/schemas/mvd.schema.json#/properties/amendment_date")                           |
-| [fn\_consultn\_start\_date](#fn_consultn_start_date)           | `string` | Optional | cannot be null | [permitting\_mvd](mvd-properties-fn_consultn_start_date.md "https://github.com/bcgov/nr-data-hub/tree/main/schemas/mvd.schema.json#/properties/fn_consultn_start_date")           |
-| [fn\_consultn\_completion\_date](#fn_consultn_completion_date) | `string` | Optional | cannot be null | [permitting\_mvd](mvd-properties-fn_consultn_completion_date.md "https://github.com/bcgov/nr-data-hub/tree/main/schemas/mvd.schema.json#/properties/fn_consultn_completion_date") |
+| [accepted\_date](#accepted_date)                               | `string` | Optional | can be null    | [permitting\_mvd](mvd-properties-accepted_date.md "https://github.com/bcgov/nr-data-hub/tree/main/schemas/mvd.schema.json#/properties/accepted_date")                             |
+| [tech\_review\_completion\_date](#tech_review_completion_date) | `string` | Optional | can be null    | [permitting\_mvd](mvd-properties-tech_review_completion_date.md "https://github.com/bcgov/nr-data-hub/tree/main/schemas/mvd.schema.json#/properties/tech_review_completion_date") |
+| [rejected\_date](#rejected_date)                               | `string` | Optional | can be null    | [permitting\_mvd](mvd-properties-rejected_date.md "https://github.com/bcgov/nr-data-hub/tree/main/schemas/mvd.schema.json#/properties/rejected_date")                             |
+| [adjudication\_date](#adjudication_date)                       | `string` | Optional | can be null    | [permitting\_mvd](mvd-properties-adjudication_date.md "https://github.com/bcgov/nr-data-hub/tree/main/schemas/mvd.schema.json#/properties/adjudication_date")                     |
+| [amendment\_date](#amendment_date)                             | `string` | Optional | can be null    | [permitting\_mvd](mvd-properties-amendment_date.md "https://github.com/bcgov/nr-data-hub/tree/main/schemas/mvd.schema.json#/properties/amendment_date")                           |
+| [fn\_consultn\_start\_date](#fn_consultn_start_date)           | `string` | Optional | can be null    | [permitting\_mvd](mvd-properties-fn_consultn_start_date.md "https://github.com/bcgov/nr-data-hub/tree/main/schemas/mvd.schema.json#/properties/fn_consultn_start_date")           |
+| [fn\_consultn\_completion\_date](#fn_consultn_completion_date) | `string` | Optional | can be null    | [permitting\_mvd](mvd-properties-fn_consultn_completion_date.md "https://github.com/bcgov/nr-data-hub/tree/main/schemas/mvd.schema.json#/properties/fn_consultn_completion_date") |
 
 ## id
 
@@ -282,7 +282,7 @@ The form type for a permit or licence application
 
 *   Type: `string`
 
-*   cannot be null
+*   can be null
 
 *   defined in: [permitting\_mvd](mvd-properties-permit_application_type.md "https://github.com/bcgov/nr-data-hub/tree/main/schemas/mvd.schema.json#/properties/permit_application_type")
 
@@ -333,7 +333,7 @@ Date in which the review of the initial application's completeness concludes
 
 *   Type: `string`
 
-*   cannot be null
+*   can be null
 
 *   defined in: [permitting\_mvd](mvd-properties-accepted_date.md "https://github.com/bcgov/nr-data-hub/tree/main/schemas/mvd.schema.json#/properties/accepted_date")
 
@@ -355,7 +355,7 @@ Date in which the technical team concludes their review of the application
 
 *   Type: `string`
 
-*   cannot be null
+*   can be null
 
 *   defined in: [permitting\_mvd](mvd-properties-tech_review_completion_date.md "https://github.com/bcgov/nr-data-hub/tree/main/schemas/mvd.schema.json#/properties/tech_review_completion_date")
 
@@ -377,7 +377,7 @@ Date in which the permit is rejected
 
 *   Type: `string`
 
-*   cannot be null
+*   can be null
 
 *   defined in: [permitting\_mvd](mvd-properties-rejected_date.md "https://github.com/bcgov/nr-data-hub/tree/main/schemas/mvd.schema.json#/properties/rejected_date")
 
@@ -399,7 +399,7 @@ Date in which the permit is adjudicated, approved or issued
 
 *   Type: `string`
 
-*   cannot be null
+*   can be null
 
 *   defined in: [permitting\_mvd](mvd-properties-adjudication_date.md "https://github.com/bcgov/nr-data-hub/tree/main/schemas/mvd.schema.json#/properties/adjudication_date")
 
@@ -421,7 +421,7 @@ Date in which the permit is amended
 
 *   Type: `string`
 
-*   cannot be null
+*   can be null
 
 *   defined in: [permitting\_mvd](mvd-properties-amendment_date.md "https://github.com/bcgov/nr-data-hub/tree/main/schemas/mvd.schema.json#/properties/amendment_date")
 
@@ -443,7 +443,7 @@ Date in which the consultation with First Nations starts
 
 *   Type: `string`
 
-*   cannot be null
+*   can be null
 
 *   defined in: [permitting\_mvd](mvd-properties-fn_consultn_start_date.md "https://github.com/bcgov/nr-data-hub/tree/main/schemas/mvd.schema.json#/properties/fn_consultn_start_date")
 
@@ -465,7 +465,7 @@ Date in which the consultation with First Nations ends
 
 *   Type: `string`
 
-*   cannot be null
+*   can be null
 
 *   defined in: [permitting\_mvd](mvd-properties-fn_consultn_completion_date.md "https://github.com/bcgov/nr-data-hub/tree/main/schemas/mvd.schema.json#/properties/fn_consultn_completion_date")
 
