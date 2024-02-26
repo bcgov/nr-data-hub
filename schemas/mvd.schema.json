@@ -1,5 +1,5 @@
 {
-  "$id": "https://example.com/person.schema.json",
+  "$id": "https://github.com/bcgov/nr-data-hub/tree/main/schemas/mvd.schema.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "permitting_mvd",
   "description": "Standardisation of the attributes collected from all LOB source systems associated with the PMT",

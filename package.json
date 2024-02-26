@@ -6,10 +6,11 @@
   "author": "Kane Smith <kane.smith@gov.bc.ca>",
   "license": "MIT",
   "dependencies": {
-    "json-schema-to-typescript": "^13.1.2"
+    "@adobe/jsonschema2md": "^7.1.5"
   },
   "scripts": {
-    "autogenerate": "yarn run generate-typescript-schemas",
-    "generate-typescript-schemas": "npx ts-node src/autogenerate/typescript.ts"
+    "autogenerate": "yarn run generate-typescript-schemas && yarn run generate-docs",
+    "generate-typescript-schemas": "npx ts-node src/autogenerate/interfaces.ts",
+    "generate-docs": "jsonschema2md -o docs/schemas -d schemas -h false -x - -n"
   }
 }
