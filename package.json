@@ -12,6 +12,6 @@
   "scripts": {
     "autogenerate": "yarn run generate-typescript-schemas && yarn run generate-docs",
     "generate-typescript-schemas": "npx ts-node src/autogenerate/interfaces.ts",
-    "generate-docs": "jsonschema2md -o docs/schemas -d schemas -h false -x - -n"
+    "generate-docs": "jsonschema2md -o docs/schemas -d schemas -h false -x - -n -s definitions"
   }
 }

@@ -6,9 +6,9 @@
 
 **enum**: the value of this property must be equal to one of the following values:
 
-| Value                | Explanation |
-| :------------------- | :---------- |
-| `"New"`              |             |
-| `"Amendment"`        |             |
-| `"Cancel"`           |             |
-| `"Change Ownership"` |             |
+| Value                | Explanation                     |
+| :------------------- | :------------------------------ |
+| `"New"`              | TODO: Add enum description here |
+| `"Amendment"`        | TODO: Add enum description here |
+| `"Cancel"`           | TODO: Add enum description here |
+| `"Change Ownership"` | TODO: Add enum description here |
