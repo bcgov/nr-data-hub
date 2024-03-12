@@ -5,18 +5,25 @@
   "description": "Metadata collected during data discovery",
   "type": "object",
   "$defs": {
-    "user": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string",
-          "description": "Name of the contact"
+    "users": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of the user"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "Email of the user"
+          }
         },
-        "email": {
-          "type": "string",
-          "format": "email",
-          "description": "Email of the contact"
-        }
+        "required": [
+          "name",
+          "email"
+        ]
       }
     },
     "security_classification": {
@@ -30,12 +37,16 @@
   },
   "properties": {
     "data_custodian": {
-      "$ref": "#/definitions/user",
-      "description": "Data custodian of the dataset"
+      "$ref": "#/definitions/users",
+      "description": "Data custodian(s) of the dataset"
+    },
+    "data_owner": {
+      "$ref": "#/definitions/users",
+      "description": "Data owner(s) of the dataset"
     },
     "data_specialist": {
-      "$ref": "#/definitions/user",
-      "description": "Data specialist of the dataset"
+      "$ref": "#/definitions/users",
+      "description": "Data specialist(s) of the dataset"
     },
     "description": {
       "type": "string",
@@ -44,6 +55,24 @@
     "security_classification": {
       "$ref": "#/definitions/security_classification",
       "description": "Security classification of the dataset"
+    },
+    "technology": {
+      "type": "object",
+      "description": "Description of the underlying technology of the dataset",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the technology"
+        },
+        "version": {
+          "type": "string",
+          "description": "Version of the technology"
+        }
+      },
+      "required": [
+        "name",
+        "version"
+      ]
     },
     "tags": {
       "type": "array",
@@ -78,7 +107,7 @@
       "items": {
         "type": "object",
         "properties": {
-          "name": {
+          "column_name": {
             "type": "string",
             "description": "Column name"
           },
@@ -105,7 +134,10 @@
         },
         "required": [
           "name",
-          "type"
+          "type",
+          "description",
+          "security_classification",
+          "nullable"
         ]
       }
     },
@@ -116,6 +148,7 @@
   },
   "required": [
     "data_custodian",
+    "technology",
     "description",
     "security_classification",
     "storage_descriptor"
