@@ -1,0 +1,179 @@
+{
+  "$id": "https://github.com/bcgov/nr-data-hub/tree/main/schemas/data_discovery.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "data_discovery_metadata",
+  "description": "Metadata collected during data discovery",
+  "type": "object",
+  "$defs": {
+    "users": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of the user"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "Email of the user"
+          }
+        },
+        "required": [
+          "name",
+          "email"
+        ]
+      }
+    },
+    "security_classification": {
+      "type": "string",
+      "enum": [
+        "Protected A",
+        "Protected B",
+        "Protected C"
+      ]
+    }
+  },
+  "properties": {
+    "data_custodian": {
+      "$ref": "#/definitions/users",
+      "description": "Data custodian(s) of the dataset"
+    },
+    "data_owner": {
+      "$ref": "#/definitions/users",
+      "description": "Data owner(s) of the dataset"
+    },
+    "data_specialist": {
+      "$ref": "#/definitions/users",
+      "description": "Data specialist(s) of the dataset"
+    },
+    "data_quality_metrics": {
+      "type": "object",
+      "description": "Quantified information pertaining to the quality of the data observed in the dataset.",
+      "properties": {
+        "accuracy": {
+          "type": "number",
+          "description": "Percentage of correct values in the dataset compared to the total number of values."
+        },
+        "completeness": {
+          "type": "number",
+          "description": "Percentage of missing values in the dataset."
+        },
+        "timeliness": {
+          "type": "integer",
+          "description": "Frequency at which data is updated or refreshed to reflect the most recent information, expressed in minutes."
+        },
+        "duplication": {
+          "type": "number",
+          "description": "Percentage of duplicated records in the dataset."
+        }
+      }
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the dataset"
+    },
+    "security_classification": {
+      "$ref": "#/definitions/security_classification",
+      "description": "Security classification of the dataset"
+    },
+    "technology": {
+      "type": "object",
+      "description": "Description of the underlying technology of the dataset",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the technology"
+        },
+        "version": {
+          "type": "string",
+          "description": "Version of the technology"
+        }
+      },
+      "required": [
+        "name",
+        "version"
+      ]
+    },
+    "tags": {
+      "type": "array",
+      "description": "Tags of the dataset, defined as key-value pairs",
+      "items": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "key",
+          "value"
+        ]
+      }
+    },
+    "categories": {
+      "type": "array",
+      "description": "Categories to define the dataset",
+      "items": {
+        "type": "string"
+      }
+    },
+    "storage_descriptor": {
+      "type": "array",
+      "description": "Relational data storage description at a column granularity",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "properties": {
+          "column_name": {
+            "type": "string",
+            "description": "Column name"
+          },
+          "type": {
+            "type": "string",
+            "description": "Column data type"
+          },
+          "precision": {
+            "type": "string",
+            "description": "Precision of the column (optional)"
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of the column"
+          },
+          "security_classification": {
+            "$ref": "#/definitions/security_classification",
+            "description": "Security classification of the column"
+          },
+          "nullable": {
+            "type": "boolean",
+            "description": "Flag to indicate if the column is nullable"
+          }
+        },
+        "required": [
+          "name",
+          "type",
+          "description",
+          "security_classification",
+          "nullable"
+        ]
+      }
+    },
+    "data_store": {
+      "type": "string",
+      "description": "Description of the location in which the data is stored"
+    }
+  },
+  "required": [
+    "data_custodian",
+    "technology",
+    "description",
+    "security_classification",
+    "storage_descriptor",
+    "metrics"
+  ]
+}
