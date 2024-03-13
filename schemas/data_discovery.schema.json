@@ -48,6 +48,28 @@
       "$ref": "#/definitions/users",
       "description": "Data specialist(s) of the dataset"
     },
+    "data_quality_metrics": {
+      "type": "object",
+      "description": "Quantified information pertaining to the quality of the data observed in the dataset.",
+      "properties": {
+        "accuracy": {
+          "type": "number",
+          "description": "Percentage of correct values in the dataset compared to the total number of values."
+        },
+        "completeness": {
+          "type": "number",
+          "description": "Percentage of missing values in the dataset."
+        },
+        "timeliness": {
+          "type": "integer",
+          "description": "Frequency at which data is updated or refreshed to reflect the most recent information, expressed in minutes."
+        },
+        "duplication": {
+          "type": "number",
+          "description": "Percentage of duplicated records in the dataset."
+        }
+      }
+    },
     "description": {
       "type": "string",
       "description": "Description of the dataset"
@@ -151,6 +173,7 @@
     "technology",
     "description",
     "security_classification",
-    "storage_descriptor"
+    "storage_descriptor",
+    "metrics"
   ]
 }
