@@ -36,10 +36,12 @@
     "name": "Oracle",
     "version": "19.20"
   },
-  "tags": {
-    "key": "environment",
-    "value": "production"
-  },
+  "tags": [
+    {
+      "key": "environment",
+      "value": "production"
+    }
+  ],
   "categories": [
     "extreme",
     "cool"
