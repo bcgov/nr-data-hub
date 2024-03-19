@@ -30,7 +30,7 @@
     "timeliness": 5,
     "duplication": 10
   },
-  "description": "This dataset shows data on whos laughed and where",
+  "description": "This fictitious dataset shows data on who's laughed and where",
   "security_classification": "Protected B",
   "technology": {
     "name": "Oracle",
