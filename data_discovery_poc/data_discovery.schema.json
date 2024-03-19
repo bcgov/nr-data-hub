@@ -178,6 +178,10 @@
     "column_mapping": {
       "type": "object",
       "description": "Object mapping source system columns as defined in the storage_descriptor to those of the MVD"
+    },
+    "extraction_query": {
+      "type": "string",
+      "description": "Extraction query used to retrieve target data from the source system"
     }
   },
   "required": [
@@ -190,6 +194,7 @@
     "security_classification",
     "storage_descriptor",
     "data_quality_metrics",
-    "column_mapping"
+    "column_mapping",
+    "extraction_query"
   ]
 }

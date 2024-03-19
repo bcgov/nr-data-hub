@@ -65,5 +65,6 @@
   "column_mapping": {
     "uuid": "id",
     "laughter_status": "application_status"
-  }
+  },
+  "extraction_query": "SELECT uuid AS id, laughter_status AS application_status FROM laughter_database WHERE laughter_status IN ('ROFL', 'LOL', 'LMAO')"
 }

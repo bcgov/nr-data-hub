@@ -43,6 +43,7 @@ Each of the sections details the step by step process to follow, with data that 
 ## Validation
 
 - Validate the extraction query with the LOB data custodians, specialists and/or owners
+  - Record this query in the _extraction_query_ field, escaping the string as required
 - Conduct an assessment of the completeness and quality of the data provided by the LOB system, recording the collected information in the _data_quality_metrics_ fields
   - Record the _accuracy_ field, allowing us to assess just how trustworthy the dataset is (TBD)
   - Record the _completeness_ field, allowing us to assess how complete the dataset is
