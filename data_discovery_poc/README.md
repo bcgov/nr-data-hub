@@ -64,4 +64,5 @@ Integration is an automated step, facilitated by the accurate collection of data
   - **TBD: Integration for other database systems is under investigation**
 - _storage_descriptor_ fields dictate data lake and relational database structure
   - Column information is mapped to complementary data types for the cloud based storage
+- _data_quality_metrics_ fields are used to automatically create data quality checks and supported monitoring infrastructure
 - All remaining information is used to populate further information for the LOB in the metadata catalog
