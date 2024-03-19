@@ -36,6 +36,18 @@
     }
   },
   "properties": {
+    "source_system": {
+      "type": "string",
+      "description": "Acronym for the source system providing the data, as it is defined in IRS"
+    },
+    "agency": {
+      "type": "string",
+      "description": "Acronym for the agency or ministry that owns the dataset"
+    },
+    "business": {
+      "type": "string",
+      "description": "Business domain or area responsible for the data"
+    },
     "data_custodian": {
       "$ref": "#/definitions/users",
       "description": "Data custodian(s) of the dataset"
@@ -163,17 +175,21 @@
         ]
       }
     },
-    "data_store": {
-      "type": "string",
-      "description": "Description of the location in which the data is stored"
+    "column_mapping": {
+      "type": "object",
+      "description": "Object mapping source system columns as defined in the storage_descriptor to those of the MVD"
     }
   },
   "required": [
+    "source_system",
+    "agency",
+    "business",
     "data_custodian",
     "technology",
     "description",
     "security_classification",
     "storage_descriptor",
-    "metrics"
+    "data_quality_metrics",
+    "column_mapping"
   ]
 }
