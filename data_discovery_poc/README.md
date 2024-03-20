@@ -39,6 +39,13 @@ Each of the sections details the step by step process to follow, with data that 
   - Record the _description_ field
   - Record the _security_classification_ field
   - Record the _nullable_ field
+- Record the _flowchart_ fields to create an understanding of the flow of information through the source system
+  - Record the _root_ node index, indicating where in the array of nodes to start the flowchart from
+  - Record the _nodes_ array, a list of textual information present inside each node on the flowchart
+  - Record the _edges_ array, a list of information defining the relationships between nodes in the graph. For each:
+    - Record the _origin_node_ index, indicating the source of the edge, zero-indexed
+    - Record the _destination_node_ index, indicating the destination of the edge, zero-indexed
+    - Record the _text_, a textual label for the edge
 
 ## Validation
 
