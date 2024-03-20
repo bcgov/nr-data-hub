@@ -68,5 +68,25 @@
     "uuid": "id",
     "laughter_status": "application_status"
   },
-  "extraction_query": "SELECT uuid AS id, laughter_status AS application_status FROM laughter_database WHERE laughter_status IN ('ROFL', 'LOL', 'LMAO')"
+  "extraction_query": "SELECT uuid AS id, laughter_status AS application_status FROM laughter_database WHERE laughter_status IN ('ROFL', 'LOL', 'LMAO')",
+  "flowchart": {
+    "root": 0,
+    "nodes": [
+      "Was a permit approved today?",
+      "Great!",
+      "Oh no!"
+    ],
+    "edges": [
+      {
+        "origin_node": 0,
+        "destination_node": 1,
+        "text": "yes"
+      },
+      {
+        "origin_node": 0,
+        "destination_node": 2,
+        "text": "no"
+      }
+    ]
+  }
 }

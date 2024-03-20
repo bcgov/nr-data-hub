@@ -182,6 +182,57 @@
     "extraction_query": {
       "type": "string",
       "description": "Extraction query used to retrieve target data from the source system"
+    },
+    "flowchart": {
+      "type": "object",
+      "description": "Graph representation of the flowchart",
+      "properties": {
+        "root": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Zero indexed root node of the flowchart"
+        },
+        "nodes": {
+          "type": "array",
+          "description": "Nodes of the flowchart",
+          "items": {
+            "type": "string",
+            "description": "Textual information to display inside each node"
+          }
+        },
+        "edges": {
+          "type": "array",
+          "description": "Representation of each edge in the flowchart, including direction and textual information to display",
+          "items": {
+            "type": "object",
+            "description": "Representation of a single edge in the flowchart",
+            "properties": {
+              "origin_node": {
+                "type": "number",
+                "description": "Index of the origin node of the edge in the flowchart, zero-indexed"
+              },
+              "destination_node": {
+                "type": "number",
+                "description": "Index of the destination node of the edge in the flowchart, zero-indexed"
+              },
+              "text": {
+                "type": "string",
+                "description": "Textual information to display on the edge of the flowchart"
+              }
+            },
+            "required": [
+              "origin_node",
+              "destination_node",
+              "text"
+            ]
+          }
+        }
+      },
+      "required": [
+        "root",
+        "nodes",
+        "edges"
+      ]
     }
   },
   "required": [
