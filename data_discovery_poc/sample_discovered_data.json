@@ -71,8 +71,8 @@
     }
   ],
   "column_mapping": {
-    "uuid": "id",
-    "laughter_status": "application_status"
+    "lmao.lol.uuid": "id",
+    "lmao.lol.laughter_status": "application_status"
   },
   "extraction_query": "SELECT uuid AS id, laughter_status AS application_status FROM lmao.lol WHERE laughter_status IN ('ROFL', 'LOL', 'LMAO')",
   "flowchart": {
