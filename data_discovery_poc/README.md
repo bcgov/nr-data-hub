@@ -32,13 +32,16 @@ Each of the sections details the step by step process to follow, with data that 
 - Describe the dataset
   - Record the _technology_ fields, ensuring the _name_ and _version_ are correct
   - Record the _security_classification_ for the entire dataset
-- Record the _storage_descriptor_ fields, which provides a description of the dataset at a column granularity. For each column, record the following:
-  - Record the _column_name_ field
-  - Record the _type_ field
-  - Record the _precision_ field
-  - Record the _description_ field
-  - Record the _security_classification_ field
-  - Record the _nullable_ field
+- Record the _storage_descriptor_ fields, which provides a description of the dataset at a table granularity. For each column, record the following:
+  - Record the _table_name_ field
+  - Record the _schema_name_ field
+  - Record the _columns_ array, recording the following for each:
+    - Record the _column_name_ field
+    - Record the _type_ field
+    - Record the _precision_ field
+    - Record the _description_ field
+    - Record the _security_classification_ field
+    - Record the _nullable_ field
 - Record the _flowchart_ fields to create an understanding of the flow of information through the source system
   - Record the _root_ node index, indicating where in the array of nodes to start the flowchart from
   - Record the _nodes_ array, a list of textual information present inside each node on the flowchart
@@ -57,7 +60,7 @@ Each of the sections details the step by step process to follow, with data that 
   - Record the _timeliness_ field, the frequency at which data in the source system is updated or refreshed, expressed in minutes
   - Record the _duplication_ field, the percentage of values in the data set that are duplicated
 - Record the _column_mapping_ fields, which maps the source systems columns to those of the MVD
-  - For each column, record the source system column name as the key and the mapped mvd field as the value
+  - For each mapped column, record [schema_name].[table_name].[column_name] as the key and the mapped mvd field as the value
 
 ## Integration
 

@@ -48,27 +48,33 @@
   ],
   "storage_descriptor": [
     {
-      "column_name": "uuid",
-      "type": "NUMBER",
-      "precision": "10",
-      "description": "Unique id field of the laughter",
-      "security_classification": "Protected B",
-      "nullable": false
-    },
-    {
-      "column_name": "laughter_status",
-      "type": "VARCHAR",
-      "precision": "256",
-      "description": "Status of the laughter",
-      "security_classification": "Protected A",
-      "nullable": false
+      "table_name": "lol",
+      "schema_name": "lmao",
+      "columns": [
+        {
+          "column_name": "uuid",
+          "type": "NUMBER",
+          "precision": "10",
+          "description": "Unique id field of the laughter",
+          "security_classification": "Protected B",
+          "nullable": false
+        },
+        {
+          "column_name": "laughter_status",
+          "type": "VARCHAR",
+          "precision": "256",
+          "description": "Status of the laughter",
+          "security_classification": "Protected A",
+          "nullable": false
+        }
+      ]
     }
   ],
   "column_mapping": {
     "uuid": "id",
     "laughter_status": "application_status"
   },
-  "extraction_query": "SELECT uuid AS id, laughter_status AS application_status FROM laughter_database WHERE laughter_status IN ('ROFL', 'LOL', 'LMAO')",
+  "extraction_query": "SELECT uuid AS id, laughter_status AS application_status FROM lmao.lol WHERE laughter_status IN ('ROFL', 'LOL', 'LMAO')",
   "flowchart": {
     "root": 0,
     "nodes": [
