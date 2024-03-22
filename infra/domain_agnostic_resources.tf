@@ -5,7 +5,7 @@ locals {
 
 module "data_hub_bucket" {
   source  = "terraform-aws-modules/s3-bucket/aws"
-  version = "4.1.0"
+  version = "4.1.1"
 
   bucket            = local.domain_agnostic_name
   block_public_acls = true
