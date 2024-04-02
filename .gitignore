@@ -1,3 +1,5 @@
 infra/.terraform
 infra/terraform.tfstate
 infra/plan
+**/__pycache__/
+.DS_Store
