@@ -22,7 +22,7 @@ jobs:
     name: Validate Schemas
     runs-on: ubuntu-latest
     timeout-minutes: 1
-    needs: list-schemas
+    needs: get-schemas
     strategy:
       matrix:
         schemas: ${{ fromJson(needs.get-schemas.outputs.matrix) }}
