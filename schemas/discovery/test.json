@@ -4,24 +4,24 @@
   "business": "Making people laugh",
   "data_custodian": [
     {
-      "contact_name": "John John",
-      "contact_email": "john.john@huh.com"
+      "name": "John John",
+      "email": "john.john@huh.com"
     }
   ],
   "data_owner": [
     {
-      "contact_name": "John Johnson",
-      "contact_email": "hmm@huh.com"
+      "name": "John Johnson",
+      "email": "hmm@huh.com"
     },
     {
-      "contact_name": "John McJohnson",
-      "contact_email": "john.mc@huh.com"
+      "name": "John McJohnson",
+      "email": "john.mc@huh.com"
     }
   ],
   "data_specialist": [
     {
-      "contact_name": "John McJohnsonson",
-      "contact_email": "john.mcson@huh.com"
+      "name": "John McJohnsonson",
+      "email": "john.mcson@huh.com"
     }
   ],
   "data_quality_metrics": {
@@ -52,7 +52,7 @@
       "schema_name": "lmao",
       "columns": [
         {
-          "column_name": "uuid",
+          "name": "uuid",
           "type": "NUMBER",
           "precision": "10",
           "description": "Unique id field of the laughter",
@@ -60,7 +60,7 @@
           "nullable": false
         },
         {
-          "column_name": "laughter_status",
+          "name": "laughter_status",
           "type": "VARCHAR",
           "precision": "256",
           "description": "Status of the laughter",

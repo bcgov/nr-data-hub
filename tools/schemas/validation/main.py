@@ -14,4 +14,5 @@ def validate_schema(input_file: str, target_schema_file: str) -> None:
 
 
 if __name__ == "__main__":
-    validate_schema(sys.argv[0], sys.argv[1])
+    # Context of execution from command line where sys.argv[0] is script path
+    validate_schema(sys.argv[1], sys.argv[2])
