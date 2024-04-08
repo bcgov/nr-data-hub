@@ -5,8 +5,8 @@ on:
     types: [opened, reopened, synchronize, ready_for_review, converted_to_draft]
 
 jobs:
-  get-schemas:
-    name: Get Schemas
+  get-discovery-schemas:
+    name: Get Discovery Schemas
     runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
@@ -16,16 +16,16 @@ jobs:
 
       - name: Set Matrix
         id: set-matrix
-        run: echo "::set-output name=matrix::$(ls schemas/**/*.schema.json | jq -R -s -c 'split("\n")[:-1]')"
+        run: echo "::set-output name=matrix::$(ls schemas/discovery/*.schema.json | jq -R -s -c 'split("\n")[:-1]')"
 
   validation:
-    name: Validate Schemas
+    name: Validate Discovery Schemas
     runs-on: ubuntu-latest
     timeout-minutes: 1
     needs: get-schemas
     strategy:
       matrix:
-        schemas: ${{ fromJson(needs.get-schemas.outputs.matrix) }}
+        schemas: ${{ fromJson(needs.get-discovery-schemas.outputs.matrix) }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -40,5 +40,5 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r tools/schemas/validation/requirements.txt
         
-      - name: Validate Schemas
-        run: echo ${{ matrix.schemas }}
+      - name: Validate Schema
+        run: python tools/schemas/validation/main.py ${{ matrix.schemas }} schemas/definitions/discovery.schema.json
