@@ -41,7 +41,7 @@ jobs:
           pip install -r tools/schemas/validation/requirements.txt
       
       - name: Echo
-        run: ${{ matrix.schemas }}
+        run: echo "${{ matrix.schemas }}"
 
       # - name: Validate Schema
       #   run: python3 tools/schemas/validation/main.py ${{ matrix.schemas }} schemas/definitions/discovery.schema.json
