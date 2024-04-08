@@ -22,7 +22,7 @@ jobs:
     name: Validate Discovery Schemas
     runs-on: ubuntu-latest
     timeout-minutes: 1
-    needs: get-schemas
+    needs: get-discovery-schemas
     strategy:
       matrix:
         schemas: ${{ fromJson(needs.get-discovery-schemas.outputs.matrix) }}
