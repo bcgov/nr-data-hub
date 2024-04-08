@@ -11,8 +11,13 @@ jobs:
     outputs:
       schemas: ${{ steps.set-matrix.outputs.matrix }}
     steps:
-      - name: Checkout
+      - name: Checkout and Cache
         uses: actions/checkout@v4
+      - id: cache
+        uses: actions/cache/save@v4
+        with:
+          path: .
+          key: ${{ github.workflow }}-${{ github.repository.event.number }}-clone-${{ hashFiles('**/lockfiles') }}
 
       - name: Set Matrix
         id: set-matrix
@@ -28,8 +33,10 @@ jobs:
       matrix:
         schemas: ${{ fromJson(needs.get-discovery-schemas.outputs.schemas) }}
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/cache/restore@v4
+        with:
+          path: .
+          key: ${{ github.workflow }}-${{ github.repository.event.number }}-clone
 
       - name: Setup Python
         uses: actions/setup-python@v5
@@ -38,9 +45,12 @@ jobs:
           python-version: '3.12'
 
       - name: Install Packages
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r tools/schemas/validation/requirements.txt
+        env:
+          PIP_DISABLE_PIP_VERSION_CHECK: "1"
+          PIP_DEFAULT_TIMEOUT: "100"
+          PYTHONDONTWRITEBYTECODE: "1"
+          PYTHONUNBUFFERED: "1"
+        run: pip install -r tools/schemas/validation/requirements.txt
 
       - name: Validate Discovery Schemas
         run: python3 tools/schemas/validation/main.py ${{ matrix.schemas }} schemas/definitions/discovery.schema.json
