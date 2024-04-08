@@ -1,90 +1,46 @@
-name: .Integration Tests
+name: Integration Tests
 
 on:
-  workflow_call:
-    inputs:
-      ### Typical / recommended
-      target:
-        description: PR number, test or prod
-        required: false
-        type: string
-        default: test
-
-env:
-  DOMAIN: apps.silver.devops.gov.bc.ca
-  PREFIX: ${{ github.event.repository.name }}-${{ inputs.target }}
+  pull_request:
+    types: [opened, reopened, synchronize, ready_for_review, converted_to_draft]
 
 jobs:
-  integration-tests:
-    name: Integration
-    runs-on: ubuntu-22.04
-    timeout-minutes: 1
-    steps:
-      - uses: actions/checkout@v4
-      # - id: cache-npm
-      #   uses: actions/cache@v4
-      #   with:
-      #     path: ~/.npm
-      #     key: ${{ runner.os }}-build-cache-node-modules-${{ hashFiles('**/package-lock.json') }}
-      #     restore-keys: |
-      #       ${{ runner.os }}-build-cache-node-modules-
-      #       ${{ runner.os }}-build-
-      #       ${{ runner.os }}-
-
-      # - env:
-      #     API_NAME: nest
-      #     BASE_URL: https://${{ github.event.repository.name }}-${{ inputs.target }}-frontend.${{ env.DOMAIN }}
-      #   run: |
-      #     cd integration-tests
-      #     npm ci
-      #     node src/main.js
-
-  cypress-e2e-tests:
-    name: E2E
-    runs-on: ubuntu-22.04
-    strategy:
-      matrix:
-        browser: [chrome, firefox, edge]
-    timeout-minutes: 5
-    steps:
-      - uses: actions/checkout@v4
-      # - id: cache-npm
-      #   uses: actions/cache@v4
-      #   with:
-      #     path: ~/.npm
-      #     key: ${{ runner.os }}-build-cache-node-modules-${{ hashFiles('**/package-lock.json') }}
-      #     restore-keys: |
-      #       ${{ runner.os }}-build-cache-node-modules-
-      #       ${{ runner.os }}-build-
-      #       ${{ runner.os }}-
-
-      # - uses: cypress-io/github-action@v6
-      #   env:
-      #     CYPRESS_baseUrl: https://${{ github.event.repository.name }}-${{ inputs.target }}-frontend.${{ env.DOMAIN }}/
-      #   with:
-      #     config: pageLoadTimeout=10000
-      #     working-directory: ./frontend
-      #     browser: ${{ matrix.browser }}
-
-      # - uses: actions/upload-artifact@v4
-      #   if: failure()
-      #   with:
-      #     name: cypress-screenshots
-      #     path: ./cypress/screenshots
-      #     if-no-files-found: ignore # 'warn' or 'error' are also available, defaults to `warn`
-
-  load-tests:
+  get-discovery-schemas:
+    name: Get Discovery Schemas
     runs-on: ubuntu-latest
-    name: Load
+    outputs:
+      schemas: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set Matrix
+        id: set-matrix
+        run: echo "matrix=$(ls schemas/discovery/*.json | jq -R -s -c 'split("\n")[:-1]')" >> $GITHUB_OUTPUT
+
+  validation:
+    name: Validate Discovery Schemas
+    runs-on: ubuntu-latest
+    timeout-minutes: 1
+    needs: get-discovery-schemas
+    if: ${{ needs.get-discovery-schemas.outputs.schemas != '[]' }}
     strategy:
       matrix:
-        name: [backend, frontend]
+        schemas: ${{ fromJson(needs.get-discovery-schemas.outputs.schemas) }}
     steps:
-      - uses: actions/checkout@v4
-      # - uses: grafana/k6-action@v0.3.1
-      #   env:
-      #     BACKEND_URL: https://${{ env.PREFIX }}-frontend.${{ env.DOMAIN }}/api
-      #     FRONTEND_URL: https://${{ env.PREFIX }}-frontend.${{ env.DOMAIN }}
-      #   with:
-      #     filename: ./load-test/${{ matrix.name }}-test.js
-      #     flags: --vus 10 --duration 30s
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          cache: 'pip'
+          python-version: '3.12'
+
+      - name: Install Packages
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r tools/schemas/validation/requirements.txt
+
+      - name: Validate Discovery Schemas
+        run: python3 tools/schemas/validation/main.py ${{ matrix.schemas }} schemas/definitions/discovery.schema.json
