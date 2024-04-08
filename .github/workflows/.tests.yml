@@ -16,7 +16,7 @@ jobs:
 
       - name: Set Matrix
         id: set-matrix
-        run: echo "::set-output name=matrix::$(ls schemas/discovery/*.json | jq -R -s -c 'split("\n")[:-1]')"
+        run: echo "matrix=$(ls schemas/discovery/*.json | jq -R -s -c 'split("\n")[:-1]')" >> $GITHUB_OUTPUT
 
   validation:
     name: Validate Discovery Schemas
