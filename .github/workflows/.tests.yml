@@ -7,7 +7,6 @@ on:
 jobs:
   get-schemas:
     name: Get Schemas
-    description: Lists all the schemas ahead of further testing
     runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
@@ -21,7 +20,6 @@ jobs:
 
   validation:
     name: Validate Schemas
-    description: Validates all schemas in the schemas directory
     runs-on: ubuntu-latest
     timeout-minutes: 1
     needs: list-schemas
