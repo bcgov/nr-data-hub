@@ -1,90 +1,44 @@
-name: .Integration Tests
+name: Integration Tests
 
-on:
-  workflow_call:
-    inputs:
-      ### Typical / recommended
-      target:
-        description: PR number, test or prod
-        required: false
-        type: string
-        default: test
-
-env:
-  DOMAIN: apps.silver.devops.gov.bc.ca
-  PREFIX: ${{ github.event.repository.name }}-${{ inputs.target }}
+on: [pull_request]
 
 jobs:
-  integration-tests:
-    name: Integration
-    runs-on: ubuntu-22.04
-    timeout-minutes: 1
-    steps:
-      - uses: actions/checkout@v4
-      # - id: cache-npm
-      #   uses: actions/cache@v4
-      #   with:
-      #     path: ~/.npm
-      #     key: ${{ runner.os }}-build-cache-node-modules-${{ hashFiles('**/package-lock.json') }}
-      #     restore-keys: |
-      #       ${{ runner.os }}-build-cache-node-modules-
-      #       ${{ runner.os }}-build-
-      #       ${{ runner.os }}-
-
-      # - env:
-      #     API_NAME: nest
-      #     BASE_URL: https://${{ github.event.repository.name }}-${{ inputs.target }}-frontend.${{ env.DOMAIN }}
-      #   run: |
-      #     cd integration-tests
-      #     npm ci
-      #     node src/main.js
-
-  cypress-e2e-tests:
-    name: E2E
-    runs-on: ubuntu-22.04
-    strategy:
-      matrix:
-        browser: [chrome, firefox, edge]
-    timeout-minutes: 5
-    steps:
-      - uses: actions/checkout@v4
-      # - id: cache-npm
-      #   uses: actions/cache@v4
-      #   with:
-      #     path: ~/.npm
-      #     key: ${{ runner.os }}-build-cache-node-modules-${{ hashFiles('**/package-lock.json') }}
-      #     restore-keys: |
-      #       ${{ runner.os }}-build-cache-node-modules-
-      #       ${{ runner.os }}-build-
-      #       ${{ runner.os }}-
-
-      # - uses: cypress-io/github-action@v6
-      #   env:
-      #     CYPRESS_baseUrl: https://${{ github.event.repository.name }}-${{ inputs.target }}-frontend.${{ env.DOMAIN }}/
-      #   with:
-      #     config: pageLoadTimeout=10000
-      #     working-directory: ./frontend
-      #     browser: ${{ matrix.browser }}
-
-      # - uses: actions/upload-artifact@v4
-      #   if: failure()
-      #   with:
-      #     name: cypress-screenshots
-      #     path: ./cypress/screenshots
-      #     if-no-files-found: ignore # 'warn' or 'error' are also available, defaults to `warn`
-
-  load-tests:
+  get-schemas:
+    name: Get Schemas
+    description: Lists all the schemas ahead of further testing
     runs-on: ubuntu-latest
-    name: Load
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set Matrix
+        id: set-matrix
+        run: echo "::set-output name=matrix::$(ls schemas/**/*.schema.json | jq -R -s -c 'split("\n")[:-1]')"
+
+  validation:
+    name: Validate Schemas
+    description: Validates all schemas in the schemas directory
+    runs-on: ubuntu-latest
+    timeout-minutes: 1
+    needs: list-schemas
     strategy:
       matrix:
-        name: [backend, frontend]
+        schemas: ${{ fromJson(needs.get-schemas.outputs.matrix) }}
     steps:
-      - uses: actions/checkout@v4
-      # - uses: grafana/k6-action@v0.3.1
-      #   env:
-      #     BACKEND_URL: https://${{ env.PREFIX }}-frontend.${{ env.DOMAIN }}/api
-      #     FRONTEND_URL: https://${{ env.PREFIX }}-frontend.${{ env.DOMAIN }}
-      #   with:
-      #     filename: ./load-test/${{ matrix.name }}-test.js
-      #     flags: --vus 10 --duration 30s
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.13'
+
+      - name: Install Packages
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+        
+      - name: Validate Schemas
+        run: echo ${{ matrix.schemas }}
