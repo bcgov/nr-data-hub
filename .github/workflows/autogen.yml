@@ -1,4 +1,4 @@
-name: Integration Tests
+name: Autogeneration
 
 on:
   pull_request:
@@ -88,3 +88,29 @@ jobs:
         run: |
           output_path=$(echo "${{ matrix.schemas }}" | sed 's|.*/\(.*\)\.schema\.json|docs/schemas/\1.md|')
           python3 tools/autogen/docs/main.py ${{ matrix.schemas }} $output_path
+
+  generate-docs:
+    name: Generate Python DataClasses
+    runs-on: ubuntu-latest
+    timeout-minutes: 1
+    needs: [ validation, get-discovery-schemas ]
+    if: ${{ needs.get-discovery-schemas.outputs.schemas != '[]' }}
+    strategy:
+      matrix:
+        schemas: ${{ fromJson(needs.get-discovery-schemas.outputs.schemas) }}
+    steps:
+      - uses: actions/cache/restore@v4
+        with:
+          path: .
+          key: ${{ github.workflow }}-${{ github.repository.event.number }}-clone
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          cache: 'pip'
+          python-version: '3.12'
+
+      - name: Generate Python DataClasses
+        run: |
+          output_path=$(echo "${{ matrix.schemas }}" | sed 's|.*/\(.*\)\.schema\.json|types/python/schemas/\1.py|')
+          ./main.sh python3 ${{ matrix.schemas }} $output_path
