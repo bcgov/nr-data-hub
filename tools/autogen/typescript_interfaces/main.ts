@@ -3,7 +3,7 @@ import { parse } from "path"
 import { compileFromFile } from "json-schema-to-typescript"
 
 const SCHEMA_DIRECTORY = "../../../schemas/definitions"
-const PACKAGE_DIRECTORY = "../../../packages/data-hub-schemas"
+const PACKAGE_DIRECTORY = "../../../types/typescript/schemas"
 
 readdirSync(SCHEMA_DIRECTORY).forEach((file) => {
   compileFromFile(`${SCHEMA_DIRECTORY}/${file}`, {
