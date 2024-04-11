@@ -89,7 +89,7 @@ jobs:
           output_path=$(echo "${{ matrix.schemas }}" | sed 's|.*/\(.*\)\.schema\.json|docs/schemas/\1.md|')
           python3 tools/autogen/docs/main.py ${{ matrix.schemas }} $output_path
 
-  generate-docs:
+  generate-dataclasses:
     name: Generate Python DataClasses
     runs-on: ubuntu-latest
     timeout-minutes: 1
