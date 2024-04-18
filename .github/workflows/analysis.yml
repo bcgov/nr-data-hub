@@ -31,35 +31,23 @@ jobs:
     #       --health-retries 5
     #     ports:
     #       - 5432:5432
-    strategy:
-      matrix:
-        dir: [.]
-        include: 
-          - dir: .
-            token: SONAR_TOKEN_BACKEND
-        # dir: [backend, frontend]
-        # include:
-        #   - dir: backend
-        #     token: SONAR_TOKEN_BACKEND
-        #   - dir: frontend
-        #     token: SONAR_TOKEN_FRONTEND
     steps:
       - uses: bcgov-nr/action-test-and-analyse@v1.2.1
         with:
           commands: |
             # npm ci
             # npm run test:cov
-            echo "Testing ${{ matrix.dir }} - coming soon!"
+            echo "Testing - coming soon!"
           dir: ${{ matrix.dir }}
           node_version: "20"
           sonar_args: >
             -Dsonar.exclusions=**/coverage/**,**/node_modules/**,**/*spec.ts
             -Dsonar.organization=bcgov-sonarcloud
-            -Dsonar.projectKey=quickstart-openshift_${{ matrix.dir }}
+            -Dsonar.projectKey=nr-data-hub
             -Dsonar.sources=src
             -Dsonar.tests.inclusions=**/*spec.ts
             -Dsonar.javascript.lcov.reportPaths=./coverage/lcov.info
-          sonar_token: ${{ secrets[matrix.token] }}
+          sonar_token: ${{ secrets.SONAR_TOKEN_DATA_HUB }}
           triggers: ('${{ matrix.dir }}/')
 
   codeql:
