@@ -14,58 +14,45 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  tests:
-    name: Tests
-    if: ${{ ! github.event.pull_request.draft }}
-    runs-on: ubuntu-22.04
-    timeout-minutes: 5
-    # services:
-    #   postgres:
-    #     image: postgres
-    #     env:
-    #       POSTGRES_PASSWORD: postgres
-    #     options: >-
-    #       --health-cmd pg_isready
-    #       --health-interval 10s
-    #       --health-timeout 5s
-    #       --health-retries 5
-    #     ports:
-    #       - 5432:5432
-    strategy:
-      matrix:
-        dir: [.]
-        include: 
-          - dir: .
-            token: SONAR_TOKEN_BACKEND
-        # dir: [backend, frontend]
-        # include:
-        #   - dir: backend
-        #     token: SONAR_TOKEN_BACKEND
-        #   - dir: frontend
-        #     token: SONAR_TOKEN_FRONTEND
-    steps:
-      - uses: bcgov-nr/action-test-and-analyse@v1.2.1
-        with:
-          commands: |
-            # npm ci
-            # npm run test:cov
-            echo "Testing ${{ matrix.dir }} - coming soon!"
-          dir: ${{ matrix.dir }}
-          node_version: "20"
-          sonar_args: >
-            -Dsonar.exclusions=**/coverage/**,**/node_modules/**,**/*spec.ts
-            -Dsonar.organization=bcgov-sonarcloud
-            -Dsonar.projectKey=quickstart-openshift_${{ matrix.dir }}
-            -Dsonar.sources=src
-            -Dsonar.tests.inclusions=**/*spec.ts
-            -Dsonar.javascript.lcov.reportPaths=./coverage/lcov.info
-          sonar_token: ${{ secrets[matrix.token] }}
-          triggers: ('${{ matrix.dir }}/')
+  # tests:
+  #   name: Tests
+  #   if: ${{ ! github.event.pull_request.draft }}
+  #   runs-on: ubuntu-22.04
+  #   timeout-minutes: 5
+  #   # services:
+  #   #   postgres:
+  #   #     image: postgres
+  #   #     env:
+  #   #       POSTGRES_PASSWORD: postgres
+  #   #     options: >-
+  #   #       --health-cmd pg_isready
+  #   #       --health-interval 10s
+  #   #       --health-timeout 5s
+  #   #       --health-retries 5
+  #   #     ports:
+  #   #       - 5432:5432
+  #   steps:
+  #     - uses: bcgov-nr/action-test-and-analyse@v1.2.1
+  #       with:
+  #         commands: |
+  #           # npm ci
+  #           # npm run test:cov
+  #           echo "Testing - coming soon!"
+  #         dir: ${{ matrix.dir }}
+  #         node_version: "20"
+  #         sonar_args: >
+  #           -Dsonar.exclusions=**/coverage/**,**/node_modules/**,**/*spec.ts
+  #           -Dsonar.organization=bcgov-sonarcloud
+  #           -Dsonar.projectKey=nr-data-hub
+  #           -Dsonar.sources=src
+  #           -Dsonar.tests.inclusions=**/*spec.ts
+  #           -Dsonar.javascript.lcov.reportPaths=./coverage/lcov.info
+  #         sonar_token: ${{ secrets.SONAR_TOKEN_DATA_HUB }}
+  #         triggers: ('${{ matrix.dir }}/')
 
   codeql:
-    name: CodeQL Security Scan
+    name: CodeQL Scan
     if: ${{ ! github.event.pull_request.draft }}
-    needs: [tests]
     runs-on: ubuntu-22.04
     timeout-minutes: 5
     steps:
@@ -74,22 +61,19 @@ jobs:
         with:
           languages: javascript
 
-      - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v3
+      - uses: github/codeql-action/analyze@v3
         with:
           category: "/language:javascript"
 
   # https://github.com/marketplace/actions/aqua-security-trivy
   trivy:
-    name: Trivy Security Scan
+    name: Trivy Scan
     if: ${{ ! github.event.pull_request.draft }}
-    needs: [tests]
     runs-on: ubuntu-22.04
     timeout-minutes: 1
     steps:
       - uses: actions/checkout@v4
-      - name: Run Trivy vulnerability scanner in repo mode
-        uses: aquasecurity/trivy-action@0.19.0
+      - uses: aquasecurity/trivy-action@0.19.0
         with:
           format: "sarif"
           hide-progress: false
@@ -99,7 +83,6 @@ jobs:
           scanners: "vuln,secret"
           severity: "CRITICAL,HIGH"
 
-      - name: Upload Trivy scan results to GitHub Security tab
-        uses: github/codeql-action/upload-sarif@v3
+      - uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: "trivy-results.sarif"
